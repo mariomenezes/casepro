@@ -10,7 +10,9 @@ node {
             sh 'virtualenv env -p python3.5'
             sh '. env/bin/activate'
             sh 'env/bin/pip install -r pip-freeze.txt'
-            sh 'env/bin/python3.5 manage.py test'
+            sh 'env/bin/pip install coverage'
+            sh 'coverage run --source="." manage.py test --verbosity=2 --noinput'
+            sh 'coverage report -m --include="casepro/*" --omit="*/migrations/*,*/tests.py"'
 
         stage 'Deploy'
             sh './deployment/deploy_prod.sh'
