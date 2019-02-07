@@ -11,8 +11,8 @@ node {
             sh '. env/bin/activate'
             sh 'env/bin/pip install -r pip-freeze.txt'
             sh 'env/bin/pip install coverage'
-            sh 'coverage run --source="." manage.py test --verbosity=2 --noinput'
-            sh 'coverage report -m --include="casepro/*" --omit="*/migrations/*,*/tests.py"'
+            sh 'env/bin/coverage run --source="." manage.py test --verbosity=2 --noinput'
+            sh 'env/bin/coverage report -m --include="casepro/*" --omit="*/migrations/*,*/tests.py"'
 
         stage 'Deploy'
             sh './deployment/deploy_prod.sh'
