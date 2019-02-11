@@ -18,7 +18,7 @@ DATABASES = {
         "NAME": "casepro",
         "USER": "casepro",
         "PASSWORD": "nyaruka",
-        "HOST": "db",
+        "HOST": "localhost",
         "PORT": "",
         "ATOMIC_REQUESTS": True,
         "OPTIONS": {},
