@@ -16,8 +16,8 @@ node {
             sh 'env/bin/coverage run --source="." manage.py test --verbosity=2 --noinput'
             sh 'env/bin/coverage report -m --include="casepro/*" --omit="*/migrations/*,*/tests.py"'
 
-        stage 'Deploy'
-            sh './deployment/deploy_prod.sh'
+        //stage 'Deploy'
+        //    sh './deployment/deploy_prod.sh'
 
         stage 'Publish results'
             slackSend color: "good", message: "Build successful: `${env.JOB_NAME}#${env.BUILD_NUMBER}` <${env.BUILD_URL}|Open in Jenkins>"
