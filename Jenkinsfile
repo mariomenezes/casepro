@@ -8,7 +8,7 @@ node {
 
         stage 'Test'
             //sh 'redis-server &'
-            sh './var/jenkins_home/run_redis.sh' 
+            sh '/var/jenkins_home/run_redis.sh' 
             sh 'virtualenv env -p python3.6'
             sh '. env/bin/activate'
             sh 'env/bin/pip install -r pip-freeze.txt'
