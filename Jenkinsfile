@@ -18,8 +18,7 @@ node {
             sh 'env/bin/coverage run --source="." manage.py test --verbosity=2 --noinput'
             sh 'env/bin/coverage report -m --include="casepro/*" --omit="*/migrations/*,*/tests.py"'
             //Need to restart redis-server for every execution, or it will fail
-            sh 'REDIS_PID=$(ps aux | grep redis-server | grep -v grep | awk '{print $2}')'
-            sh 'kill $REDIS_PID'
+            sh "$JENKINS_HOME/redis_stop.sh"
 
         stage 'Build Docker Image with Ansible'
             sh 'ansible-playbook  $JENKINS_HOME/$BUILD/build_images.yml -vvv --flush-cache'
