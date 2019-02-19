@@ -7,8 +7,8 @@ node {
             checkout scm
 
         stage 'Test'
-            //sh 'redis-server &'
-            sh '/var/jenkins_home/run_redis.sh' 
+            sh 'redis-server &'
+            //sh '/var/jenkins_home/run_redis.sh' 
             sh 'virtualenv env -p python3.6'
             sh '. env/bin/activate'
             sh 'env/bin/pip install -r pip-freeze.txt'
@@ -17,7 +17,9 @@ node {
             //sh "sed -i "s/"HOST": "localhost"/"HOST": "db"/" settings.py"
             sh 'env/bin/coverage run --source="." manage.py test --verbosity=2 --noinput'
             sh 'env/bin/coverage report -m --include="casepro/*" --omit="*/migrations/*,*/tests.py"'
-            
+            //Need to restart redis-server for every execution, or it will fail
+            sh 'REDIS_PID=$(ps aux | grep redis-server | grep -v grep | awk '{print $2}')'
+            sh 'kill $REDIS_PID'
 
         stage 'Build Docker Image with Ansible'
             sh 'ansible-playbook  $JENKINS_HOME/$BUILD/build_images.yml -vvv --flush-cache'
