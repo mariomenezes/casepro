@@ -20,7 +20,7 @@ node {
             
 
         stage 'Build Docker Image with Ansible'
-            sh 'ansible-playbook  $BUILD/build_images.yml -vvv --flush-cache'
+            sh 'ansible-playbook  $JENKINS_HOME/$BUILD/build_images.yml -vvv --flush-cache'
             sh 'docker image ls'
 
         //stage 'Deploy Docker Image with Ansible'
