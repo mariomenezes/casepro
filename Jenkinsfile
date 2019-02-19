@@ -7,6 +7,7 @@ node {
             checkout scm
 
         stage 'Test'
+            sh 'redis-server &'
             sh 'virtualenv env -p python3.6'
             sh '. env/bin/activate'
             sh 'env/bin/pip install -r pip-freeze.txt'
@@ -15,6 +16,7 @@ node {
             //sh "sed -i "s/"HOST": "localhost"/"HOST": "db"/" settings.py"
             sh 'env/bin/coverage run --source="." manage.py test --verbosity=2 --noinput'
             sh 'env/bin/coverage report -m --include="casepro/*" --omit="*/migrations/*,*/tests.py"'
+            sh 'killall redis-server'
 
         //stage 'Deploy'
         //    sh './deployment/deploy_prod.sh'
