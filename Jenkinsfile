@@ -21,6 +21,7 @@ node {
             sh "$JENKINS_HOME/redis_stop.sh"
 
         stage 'Build Docker Image with Ansible'
+            sh 'pip install docker-py'
             sh 'ansible-playbook  $JENKINS_HOME/$BUILD/build_images.yml -vvv --flush-cache'
             sh 'docker image ls'
 
